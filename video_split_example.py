@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 def save_interval_frames_to_images(video_clip, output_dir, interval):
     os.makedirs(output_dir, exist_ok=True)
-    for i, frame in enumerate(video_clip.iter_frames()):
+    for i, frame in tqdm(enumerate(video_clip.iter_frames())):
         if i % interval == 0:
             frame_path = os.path.join(output_dir, f"frame_{i:06d}.png")
             Image.fromarray(frame).save(frame_path)
