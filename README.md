@@ -25,7 +25,7 @@ pip install py-real-esrgan moviepy
 ---
 
 Basic usage:
-
+* Image
 ```python
 import torch
 from PIL import Image
@@ -44,11 +44,11 @@ sr_image = model.predict(image)
 
 sr_image.save('results/sr_image.png')
 ```
-
+* Video
 ```bash
 python video_exmple.py
 ```
-
+* Video
 ```bash
 python video_example_multiprocess.py
 ```
