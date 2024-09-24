@@ -52,6 +52,10 @@ python video_exmple.py
 ```bash
 python video_example_multiprocess.py
 ```
+* Video
+```bash
+python video_example_batch_multiprocess.py
+```
 
 ### Examples
 
