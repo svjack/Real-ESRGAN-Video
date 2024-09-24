@@ -1,4 +1,4 @@
-# Real-ESRGAN
+# Real-ESRGAN-Video
 PyTorch implementation of a Real-ESRGAN model trained on custom dataset. This model shows better results on faces compared to the original version. It is also easier to integrate this model into your projects.
 
 > This is not an official implementation. We partially use code from the [original repository](https://github.com/xinntao/Real-ESRGAN)
@@ -12,9 +12,12 @@ You can try it in [google colab](https://colab.research.google.com/drive/1YlWt--
 - [Huggingface 🤗](https://huggingface.co/sberbank-ai/Real-ESRGAN)
 
 ### Installation
+```bash
+sudo apt-get update && sudo apt-get install ffmpeg
+```
 
 ```bash
-pip install git+https://github.com/sberbank-ai/Real-ESRGAN.git
+pip install py-real-esrgan moviepy
 ```
 
 ### Usage
