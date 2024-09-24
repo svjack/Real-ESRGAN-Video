@@ -45,6 +45,14 @@ sr_image = model.predict(image)
 sr_image.save('results/sr_image.png')
 ```
 
+```bash
+python video_exmple.py
+```
+
+```bash
+python video_example_multiprocess.py
+```
+
 ### Examples
 
 ---
