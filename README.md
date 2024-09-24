@@ -13,7 +13,7 @@ You can try it in [google colab](https://colab.research.google.com/drive/1YlWt--
 
 ### Installation
 ```bash
-sudo apt-get update && sudo apt-get install ffmpeg
+sudo apt-get update && sudo apt-get install ffmpeg -y
 ```
 
 ```bash
