@@ -10,7 +10,18 @@ import multiprocessing as mp
 def upscale_frame(frame, upscale_factor):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = RealESRGAN(device, scale=upscale_factor)
-    model.load_weights('weights/RealESRGAN_x4.pth', download=True)
+    
+    # 根据 upscale_factor 选择相应的权重文件
+    if upscale_factor == 2:
+        weights_path = 'weights/RealESRGAN_x2.pth'
+    elif upscale_factor == 4:
+        weights_path = 'weights/RealESRGAN_x4.pth'
+    elif upscale_factor == 8:
+        weights_path = 'weights/RealESRGAN_x8.pth'
+    else:
+        raise ValueError("Unsupported upscale factor")
+    
+    model.load_weights(weights_path, download=True)
 
     pil_image = Image.fromarray(frame)
     with torch.no_grad():
