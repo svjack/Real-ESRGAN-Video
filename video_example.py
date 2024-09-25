@@ -39,6 +39,10 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
 
     # 从上采样后的帧创建新的视频
     sr_video_clip = ImageSequenceClip(frames, fps=video_clip.fps)
+    
+    if video_clip.audio is not None:
+        sr_video_clip = sr_video_clip.set_audio(video_clip.audio)
+        
     sr_video_clip.write_videofile(output_video_path, codec='libx264')
 
     # 清除临时文件
