@@ -1,3 +1,4 @@
+#### 只有跳过逻辑，没有插值逻辑，threshold > 0 有风险
 import os
 import torch
 from PIL import Image, ImageChops, ImageStat
