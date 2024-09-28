@@ -8,7 +8,6 @@ from tqdm import tqdm
 import time
 import uuid
 import shutil
-from concurrent.futures import ProcessPoolExecutor, as_completed
 
 def get_image_diff(image0: Image.Image, image1: Image.Image) -> float:
     """计算两张图片之间的差异百分比"""
@@ -88,26 +87,6 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
 
     print(f"Video upscaled and saved to {output_video_path}")
 
-def batch_upscale_videos(video_paths, upscale_factor=4, max_frames=None, threshold=0, batch_size=6):
-    """批量上采样视频"""
-    # 将视频路径列表分成每批次6个元素的子列表
-    video_batches = [video_paths[i:i + batch_size] for i in range(0, len(video_paths), batch_size)]
-    
-    for batch in video_batches:
-        print(f"Processing batch of {len(batch)} videos...")
-        
-        # 使用 ProcessPoolExecutor 并行处理每个批次的视频
-        with ProcessPoolExecutor() as executor:
-            futures = []
-            for video_path in batch:
-                output_video_path = f"{os.path.splitext(video_path)[0]}_x{upscale_factor}.mp4"
-                futures.append(executor.submit(upscale_video, video_path, output_video_path, upscale_factor, max_frames, threshold))
-            
-            # 等待所有任务完成
-            for future in as_completed(futures):
-                future.result()
-        
-        print(f"Batch processing complete.")
 
 input_video_path = "丽莎动态.mp4"
 output_video_path = "丽莎动态_skp2x2.mp4"
@@ -120,20 +99,3 @@ output_video_path = "丽莎_skp2x05.mp4"
 upscale_factor = 2
 threshold = 0.5  # 设置阈值，0表示不跳过任何帧
 upscale_video(input_video_path, output_video_path, upscale_factor, max_frames=None, threshold=threshold)
-
-# 示例视频路径列表
-video_paths = [
-    "video1.mp4",
-    "video2.mp4",
-    "video3.mp4",
-    "video4.mp4",
-    "video5.mp4",
-    "video6.mp4",
-    "video7.mp4",
-    "video8.mp4",
-    "video9.mp4",
-    "video10.mp4",
-]
-
-# 批量上采样视频
-batch_upscale_videos(video_paths, upscale_factor=4, max_frames=None, threshold=0, batch_size=6)
