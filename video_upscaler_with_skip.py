@@ -87,15 +87,15 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
 
     print(f"Video upscaled and saved to {output_video_path}")
 
-
-input_video_path = "丽莎动态.mp4"
-output_video_path = "丽莎动态_skp2x2.mp4"
-upscale_factor = 2
-threshold = 2  # 设置阈值，0表示不跳过任何帧
-upscale_video(input_video_path, output_video_path, upscale_factor, max_frames=None, threshold=threshold)
-
-input_video_path = "丽莎.mp4"
-output_video_path = "丽莎_skp2x05.mp4"
-upscale_factor = 2
-threshold = 0.5  # 设置阈值，0表示不跳过任何帧
-upscale_video(input_video_path, output_video_path, upscale_factor, max_frames=None, threshold=threshold)
+if __name__ == "__main__":
+    input_video_path = "丽莎动态.mp4"
+    output_video_path = "丽莎动态_skp2x2.mp4"
+    upscale_factor = 2
+    threshold = 2  # 设置阈值，0表示不跳过任何帧
+    upscale_video(input_video_path, output_video_path, upscale_factor, max_frames=None, threshold=threshold)
+    
+    input_video_path = "丽莎.mp4"
+    output_video_path = "丽莎_skp2x05.mp4"
+    upscale_factor = 2
+    threshold = 0.5  # 设置阈值，0表示不跳过任何帧
+    upscale_video(input_video_path, output_video_path, upscale_factor, max_frames=None, threshold=threshold)
