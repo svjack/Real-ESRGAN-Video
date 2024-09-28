@@ -7,6 +7,7 @@ from moviepy.editor import VideoFileClip, ImageSequenceClip
 from tqdm import tqdm
 import time
 import uuid
+import shutil
 
 def get_image_diff(image0: Image.Image, image1: Image.Image) -> float:
     """计算两张图片之间的差异百分比"""
@@ -82,13 +83,7 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
     sr_video_clip.fps = original_fps
     
     sr_video_clip.write_videofile(output_video_path, codec='libx264')
-    
-    '''
-    # 清除临时文件
-    for frame_path in frames:
-        os.remove(frame_path)
-    '''
-    os.rmdir(temp_dir)
+    shutil.rmtree(temp_dir)
 
     print(f"Video upscaled and saved to {output_video_path}")
 
