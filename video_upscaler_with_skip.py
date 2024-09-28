@@ -6,6 +6,7 @@ from py_real_esrgan.model import RealESRGAN
 from moviepy.editor import VideoFileClip, ImageSequenceClip
 from tqdm import tqdm
 import time
+import uuid
 
 def get_image_diff(image0: Image.Image, image1: Image.Image) -> float:
     """计算两张图片之间的差异百分比"""
@@ -32,8 +33,8 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
     video_clip = VideoFileClip(input_video_path)
     original_fps = video_clip.fps  # 获取原视频的帧率
 
-    # 创建一个临时目录来存储上采样后的帧
-    temp_dir = "temp_frames"
+    # 创建一个随机名称的临时目录来存储上采样后的帧
+    temp_dir = f"temp_frames_{uuid.uuid4()}"
     os.makedirs(temp_dir, exist_ok=True)
 
     # 逐帧上采样
