@@ -24,19 +24,20 @@ def batch_upscale_videos(video_paths, upscale_factor=4, max_frames=None, thresho
         
         print(f"Batch processing complete.")
 
-# 示例视频路径列表
-video_paths = [
-    "video1.mp4",
-    "video2.mp4",
-    "video3.mp4",
-    "video4.mp4",
-    "video5.mp4",
-    "video6.mp4",
-    "video7.mp4",
-    "video8.mp4",
-    "video9.mp4",
-    "video10.mp4",
-]
-
-# 批量上采样视频
-batch_upscale_videos(video_paths, upscale_factor=4, max_frames=None, threshold=0, batch_size=6)
+if __name__ == "__main__":
+    # 示例视频路径列表
+    video_paths = [
+        "video1.mp4",
+        "video2.mp4",
+        "video3.mp4",
+        "video4.mp4",
+        "video5.mp4",
+        "video6.mp4",
+        "video7.mp4",
+        "video8.mp4",
+        "video9.mp4",
+        "video10.mp4",
+    ]
+    
+    # 批量上采样视频
+    batch_upscale_videos(video_paths, upscale_factor=4, max_frames=None, threshold=0, batch_size=6)
