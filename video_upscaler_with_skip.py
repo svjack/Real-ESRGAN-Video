@@ -9,6 +9,53 @@ import time
 import uuid
 import shutil
 
+def upscale_images(input_dir, output_dir, upscale_factor=4):
+    # 根据 upscale_factor 选择相应的权重文件
+    if upscale_factor == 2:
+        weights_path = 'weights/RealESRGAN_x2.pth'
+    elif upscale_factor == 4:
+        weights_path = 'weights/RealESRGAN_x4.pth'
+    elif upscale_factor == 8:
+        weights_path = 'weights/RealESRGAN_x8.pth'
+    else:
+        raise ValueError("Unsupported upscale factor")
+
+    # 初始化 RealESRGAN 模型
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = RealESRGAN(device, scale=upscale_factor)
+    model.load_weights(weights_path, download=True)
+
+    # 确保输出目录存在
+    os.makedirs(output_dir, exist_ok=True)
+
+    # 获取输入目录下的所有图片文件
+    image_files = [f for f in os.listdir(input_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff'))]
+
+    # 逐张图片上采样
+    for image_file in tqdm(image_files, desc="Upscaling Images"):
+        # 读取图片
+        image_path = os.path.join(input_dir, image_file)
+        pil_image = Image.open(image_path)
+
+        # 使用 RealESRGAN 进行上采样
+        with torch.no_grad():
+            sr_image = model.predict(pil_image)
+
+        # 生成新的图片名称，并添加后缀
+        base_name, ext = os.path.splitext(image_file)
+        if upscale_factor == 2:
+            new_image_name = f"{base_name}_x2{ext}"
+        elif upscale_factor == 4:
+            new_image_name = f"{base_name}_x4{ext}"
+        elif upscale_factor == 8:
+            new_image_name = f"{base_name}_x8{ext}"
+
+        # 保存上采样后的图片到输出目录
+        sr_image_path = os.path.join(output_dir, new_image_name)
+        sr_image.save(sr_image_path)
+
+    print(f"All images upscaled and saved to {output_dir}")
+
 def get_image_diff(image0: Image.Image, image1: Image.Image) -> float:
     """计算两张图片之间的差异百分比"""
     difference_stat = ImageStat.Stat(ImageChops.difference(image0, image1))
@@ -88,6 +135,10 @@ def upscale_video(input_video_path, output_video_path, upscale_factor=4, max_fra
     print(f"Video upscaled and saved to {output_video_path}")
 
 if __name__ == "__main__":
+    upscale_images("pic_unzip_save_dir_pinyin_crop_rm_bk_merge_crop_zh", "IP-Adapter原神角色图片(face-crop-plus-chinese)-LivePortrait测试-v2-x2", 2)
+
+    upscale_images("pic_unzip_save_dir_pinyin_crop_rm_bk_merge_crop_zh", "IP-Adapter原神角色图片(face-crop-plus-chinese)-LivePortrait测试-v2-x4", 4)
+    
     input_video_path = "丽莎动态.mp4"
     output_video_path = "丽莎动态_skp2x2.mp4"
     upscale_factor = 2
